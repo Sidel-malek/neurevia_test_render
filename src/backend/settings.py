@@ -80,6 +80,10 @@ CSRF_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = False  # Django admin يحتاج CSRF على جافاسكربت
 
+
+SESSION_COOKIE_DOMAIN = ".onrender.com"
+CSRF_COOKIE_DOMAIN = ".onrender.com"
+
 # 🌐 CORS (الفرونت)
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [

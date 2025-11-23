@@ -169,24 +169,23 @@ class CustomLoginView_2(ObtainAuthToken):
             
             # Définir le cookie HttpOnly sécurisé
             response.set_cookie(
-                key='auth_token',
-                value=token.key,
-                httponly=True,
-                secure=True,
-                samesite="None",
-                domain=None,   # VERY IMPORTANT
-                path='/',
+               key='auth_token',
+               value=token.key,
+               httponly=True,
+               secure=True,
+               samesite="None",
+               domain='.onrender.com',  # 🔥🔥🔥 Correction critique
+               path='/',
+            )
+            response.set_cookie(
+               key='csrftoken',
+               value=get_token(request),
+               secure=True,
+               httponly=False,
+               samesite='None',
+               domain='.onrender.com',  # 🔥🔥🔥 Correction
             )
 
-            
-            # Ajouter aussi un cookie CSRF si nécessaire
-            response.set_cookie(
-                key='csrftoken',
-                value=get_token(request),
-                secure=True,
-                samesite='None',
-                domain=None,   # VERY IMPORTANT
-            )
 
             
             return response
