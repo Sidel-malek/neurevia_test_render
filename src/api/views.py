@@ -3,41 +3,27 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
-from django.http import JsonResponse, FileResponse, HttpResponse
-from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 from django.utils import timezone
 from django.contrib.auth import logout
 from django.middleware.csrf import get_token
-from django.core.files.base import ContentFile
 
 from .models import (
-    CustomUser, VerificationDocument, Analyse,
+    VerificationDocument,
     DoctorProfile, Abonnement, PatientProfile
 )
 from .serializers import (
-    DoctorRegisterSerializer, PatientSerializer,
-    PatientProfileSerializer, AnalyseSerializer,
+    DoctorRegisterSerializer, AnalyseSerializer,
     PatientListSerializer
 )
 
 from authentication import CookieTokenAuthentication
 
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import inch, cm
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
-from reportlab.lib.utils import ImageReader
 
-from datetime import datetime, date
-import json
-import os
 
 """___________________________________________________________________________________
                                 Registration
@@ -131,7 +117,6 @@ class CustomLoginView_1(ObtainAuthToken):
 
 
 from django.middleware.csrf import get_token
-from django.http import HttpResponse
 
 class CustomLoginView_2(ObtainAuthToken):
     permission_classes = []
