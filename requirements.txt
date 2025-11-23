@@ -1,0 +1,37 @@
+# Core Django
+Django>=4.0,<5.0
+pytz
+asgiref>=3.5.2
+
+# Django REST Framework
+djangorestframework>=3.14.0
+djangorestframework-simplejwt>=5.2.2
+
+# Pour gérer les fichiers médias
+Pillow>=9.0.0
+
+# Auth via .env
+python-dotenv>=1.0.1
+python-decouple>=3.8
+
+# Base de données PostgreSQL
+psycopg2-binary>=2.9.0
+
+# CORS pour le frontend React
+django-cors-headers>=3.14.0
+gunicorn
+
+
+torch
+torchvision
+torchcam
+scikit-learn==1.6.1
+xgboost
+joblib
+huggingface_hub
+pandas
+
+dj_database_url
+timm 
+shap
+reportlab

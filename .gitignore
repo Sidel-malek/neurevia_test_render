@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.manifest
+*.spec
+
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+.env
+
+# VS Code / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+*.db
+
+# Byte-compiled / optimized / DLL files
+*.pyo
+*.pyd
+*$py.class
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Migrations (optional, if you want them re-generated on prod)
+# **Comment this line if you want to keep migrations under version control**
+#migrations/
+
+# Docker
+docker-compose.override.yml
+docker-compose.dev.yml
+.docker/
+*.bak
+
+# System
+.DS_Store
+Thumbs.db
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
