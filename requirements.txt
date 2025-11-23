@@ -21,17 +21,8 @@ psycopg2-binary>=2.9.0
 django-cors-headers>=3.14.0
 gunicorn
 
-
-torch
-torchvision
-torchcam
-scikit-learn==1.6.1
-xgboost
-joblib
-huggingface_hub
 pandas
 
 dj_database_url
-timm 
-shap
-reportlab
+ 
+

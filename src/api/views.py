@@ -4,31 +4,28 @@ from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
-from torchvision import transforms
-from PIL import Image
-from authentication import CookieTokenAuthentication
-from django.http import JsonResponse , FileResponse
-from .models import CustomUser, VerificationDocument , Analyse, DoctorProfile , Abonnement , PatientProfile, Analyse
-from .serializers import DoctorRegisterSerializer , PatientSerializer ,  PatientProfileSerializer ,  AnalyseSerializer , PatientListSerializer
-import torch.nn.functional as F
-from torchcam.methods import GradCAM
-from torchcam.utils import overlay_mask
-import matplotlib.pyplot as plt
-from torchvision.transforms.functional import to_pil_image
-import pandas as pd
-from modelAI.utils import CCTModel, ada_model_csf_demo, data_processed_csf_demo ,data_processed ,ada_model, imputer_csf_demo, imputer_all,explain_patient_ada_kernel, consensus_prediction , save_base64_image
-import io, base64 , torch , os
-
-import numpy as np
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import api_view, permission_classes
+
+from django.http import JsonResponse, FileResponse, HttpResponse
+from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from django.contrib.auth import logout
+from django.middleware.csrf import get_token
 from django.core.files.base import ContentFile
 
-from rest_framework.permissions import IsAuthenticated
-from reportlab.pdfgen import canvas
-from io import BytesIO
-from rest_framework.decorators import api_view, permission_classes , authentication_classes
+from .models import (
+    CustomUser, VerificationDocument, Analyse,
+    DoctorProfile, Abonnement, PatientProfile
+)
+from .serializers import (
+    DoctorRegisterSerializer, PatientSerializer,
+    PatientProfileSerializer, AnalyseSerializer,
+    PatientListSerializer
+)
 
-from django.shortcuts import get_object_or_404
+from authentication import CookieTokenAuthentication
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
 from reportlab.lib.pagesizes import A4
@@ -37,15 +34,10 @@ from reportlab.lib.units import inch, cm
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
 from reportlab.lib.utils import ImageReader
+
+from datetime import datetime, date
 import json
-from datetime import datetime , date
-from django.conf import settings
-from django.core.files import File
-from django.db import transaction 
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
+import os
 
 """___________________________________________________________________________________
                                 Registration
@@ -509,7 +501,7 @@ class EnhancedLogoutView(APIView):
             print(f"Logout error: {e}")
             return Response({"error": "Error during logout"}, status=status.HTTP_400_BAD_REQUEST)
  
- 
+
 class DoctorPatientsView(APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
