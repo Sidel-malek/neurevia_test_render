@@ -171,23 +171,23 @@ class CustomLoginView_2(ObtainAuthToken):
             response.set_cookie(
                 key='auth_token',
                 value=token.key,
-                httponly=True,  # Empêche l'accès JavaScript
-                secure=True,    # HTTPS seulement en production
-                samesite="None",  # Protection CSRF
-                domain=".neurev.com", 
-                max_age=86400,  # 24 heures
+                httponly=True,
+                secure=True,
+                samesite="None",
+                domain=None,   # VERY IMPORTANT
                 path='/',
             )
+
             
             # Ajouter aussi un cookie CSRF si nécessaire
             response.set_cookie(
                 key='csrftoken',
                 value=get_token(request),
                 secure=True,
-                domain=".neurev.com", 
-                samesite='Lax',
-                max_age=86400,
+                samesite='None',
+                domain=None,   # VERY IMPORTANT
             )
+
             
             return response
         
