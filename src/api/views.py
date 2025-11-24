@@ -65,7 +65,7 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=400)
 
 
-class CustomLoginView(ObtainAuthToken):
+class CustomLoginView_2(ObtainAuthToken):
     """
     Vue de login unifiée avec gestion correcte des cookies
     """
