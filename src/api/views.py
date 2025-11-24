@@ -175,7 +175,6 @@ class CustomLoginView_2(ObtainAuthToken):
               httponly=True,
               secure=True,
               samesite="None",
-              domain=".onrender.com",
               path="/",
         )
             response.set_cookie(
@@ -184,7 +183,6 @@ class CustomLoginView_2(ObtainAuthToken):
                secure=True,
                httponly=False,
                samesite='None',
-               domain=".onrender.com",
                path="/",  # 🔥🔥🔥 Correction
             )
 
