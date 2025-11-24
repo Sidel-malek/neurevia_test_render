@@ -171,7 +171,7 @@ class CustomLoginView_2(ObtainAuthToken):
             response.set_cookie(
               key="auth_token",
               value=token.key,
-              httponly=True,
+              httponly=False,
               secure=True,
               samesite="None",
               domain=".onrender.com",   # 🔥 OBLIGATOIRE
