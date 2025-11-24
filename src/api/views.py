@@ -417,4 +417,4 @@ class PatientAnalysesView(APIView):
 
         analyses = patient.analyses.all().order_by("-date")
         serializer = AnalyseSerializer(analyses, many=True)
-        return Response(serializer.data, status=200)s
+        return Response(serializer.data, status=200)
