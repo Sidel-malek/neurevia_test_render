@@ -32,6 +32,25 @@ INSTALLED_APPS = [
 ]
 
 # -------------------------------------------------------
+# TEMPLATES
+# -------------------------------------------------------
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],  # Si tu as des templates personnalisés, mets leur chemin ici
+        "APP_DIRS": True,  # 🔥 crucial : permet à Django de chercher dans les apps, y compris admin
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+
+# -------------------------------------------------------
 # MIDDLEWARE
 # -------------------------------------------------------
 MIDDLEWARE = [
