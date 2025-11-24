@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("DJANGO_SECRET_KEY", default="unsafe-secret-key")
 DEBUG = config("DJANGO_DEBUG", default=True, cast=bool)
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"]  # Render autorise tout en production
 
 # -------------------------------------------------------
 # APPS
@@ -23,31 +23,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
-
     "api",
-]
-
-# -------------------------------------------------------
-# TEMPLATES
-# -------------------------------------------------------
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],  # Si tu as des templates personnalisés, mets leur chemin ici
-        "APP_DIRS": True,  # 🔥 crucial : permet à Django de chercher dans les apps, y compris admin
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
-        },
-    },
 ]
 
 # -------------------------------------------------------
@@ -70,7 +49,10 @@ ROOT_URLCONF = "backend.urls"
 # DATABASE
 # -------------------------------------------------------
 DATABASES = {
-    "default": dj_database_url.parse(config("DATABASE_URL"), conn_max_age=600)
+    "default": dj_database_url.parse(
+        config("DATABASE_URL"),
+        conn_max_age=600
+    )
 }
 
 # -------------------------------------------------------
@@ -92,11 +74,14 @@ REST_FRAMEWORK = {
     ],
 }
 
+# -------------------------------------------------------
+# USER MODEL
+# -------------------------------------------------------
 AUTH_USER_MODEL = "api.CustomUser"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # -------------------------------------------------------
-# COOKIES CONFIG (Render ↔ Render)
+# COOKIES (Render ↔ Render)
 # -------------------------------------------------------
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
@@ -107,28 +92,25 @@ CSRF_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = False
 
-# CRITICAL: Doit être None pour Render
+# IMPORTANT : Render bloque si tu mets un domaine
 SESSION_COOKIE_DOMAIN = None
 CSRF_COOKIE_DOMAIN = None
 
-# Add max age
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 7  # 7 days
-
 # -------------------------------------------------------
-# CORS CONFIG
+# CORS (uniquement Render)
 # -------------------------------------------------------
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://neurevia-frontend.onrender.com",        # Frontend Render
+    "https://neurevia-frontend.onrender.com",  # ton frontend Render
 ]
 
 # -------------------------------------------------------
 # CSRF TRUSTED ORIGINS
 # -------------------------------------------------------
 CSRF_TRUSTED_ORIGINS = [
-    "https://neurevia-frontend.onrender.com",        # Frontend
-    "https://neurevia-test-render.onrender.com",     # Backend
+    "https://neurevia-frontend.onrender.com",
+    "https://neurevia-v1-2.onrender.com",      # backend Render
 ]
 
 # -------------------------------------------------------
