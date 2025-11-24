@@ -174,6 +174,7 @@ class CustomLoginView_2(ObtainAuthToken):
               httponly=True,
               secure=True,
               samesite="None",
+              domain=".onrender.com",   # 🔥 OBLIGATOIRE
               path="/",
         )
             response.set_cookie(
@@ -182,6 +183,7 @@ class CustomLoginView_2(ObtainAuthToken):
                secure=True,
                httponly=False,
                samesite='None',
+               domain=".onrender.com",   # 🔥 OBLIGATOIRE
                path="/",  # 🔥🔥🔥 Correction
             )
 
@@ -477,7 +479,7 @@ class EnhancedLogoutView(APIView):
             cookies_to_clear = ['auth_token', 'sessionid', 'csrftoken']
             
             for cookie_name in cookies_to_clear:
-                response.delete_cookie(cookie_name , path="/")
+                response.delete_cookie(cookie_name , path="/", domain=".onrender.com")
             
             return response
         except Exception as e:
