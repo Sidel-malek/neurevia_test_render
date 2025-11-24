@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 from .views import (
     # Auth & Doctor
-    RegisterView, CustomLoginView_2,CheckAuthView,CheckSubscriptionView, EnhancedLogoutView , check_auth
+    RegisterView, CustomLoginView_2,CheckAuthView,CheckSubscriptionView, EnhancedLogoutView , CheckAuthView
 )
 
 urlpatterns = [
@@ -13,8 +13,8 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
     path('login/', CustomLoginView_2.as_view(), name='login'),
     path('logout/', EnhancedLogoutView.as_view(), name='logout'),
-    #path('check-auth/', CheckAuthView.as_view(), name='check-auth'),
-    path('check-auth/', check_auth, name='check-auth'),
+    path('check-auth/', CheckAuthView.as_view(), name='check-auth'),
+    #path('check-auth/', check_auth, name='check-auth'),
   
     path("check-subscription/", CheckSubscriptionView.as_view(), name="check-subscription"),
 
