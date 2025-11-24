@@ -6,6 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
+from .serializers import DoctorRegisterSerializer , PatientSerializer ,  PatientProfileSerializer ,  AnalyseSerializer , PatientListSerializer
 
 from django.http import JsonResponse
 from django.utils import timezone
@@ -418,3 +419,51 @@ class PatientAnalysesView(APIView):
         analyses = patient.analyses.all().order_by("-date")
         serializer = AnalyseSerializer(analyses, many=True)
         return Response(serializer.data, status=200)
+    
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_patient_details(request, patient_id):
+    try:
+        patient = PatientProfile.objects.get(id=patient_id)
+        
+        # Vérifiez que l'utilisateur a accès à ce patient
+        if request.user != patient.doctor.user and not request.user.is_staff:
+            return JsonResponse({'error': 'Access denied'}, status=403)
+        
+        patient_data = {
+            'id': patient.id,
+            'first_name': patient.user.first_name,
+            'last_name': patient.user.last_name,
+            'date_of_birth': patient.user.date_of_birth.isoformat() if patient.user.date_of_birth else None,
+            'gender': patient.user.gender,
+            'num_dossier': patient.num_dossier,
+        }
+        
+        return JsonResponse(patient_data)
+        
+    except PatientProfile.DoesNotExist:
+        return JsonResponse({'error': 'Patient not found'}, status=404)
+    
+
+class PatientCreateView(APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        if request.user.role != "doctor" or not request.user.doctor_profile.is_approved:
+            return Response(
+                {"error": "Only approved doctors can add patients."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        serializer = PatientSerializer(
+            data=request.data,
+            context={"request": request}
+        )
+        if serializer.is_valid():
+            patient = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)  # ✅ full data
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
